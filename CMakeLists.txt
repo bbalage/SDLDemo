@@ -1,11 +1,12 @@
 cmake_minimum_required(VERSION 3.16)
 
 project(SDLDemo VERSION 1.0 LANGUAGES CXX)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
 find_package(SDL2 REQUIRED)
+find_package(SDL2_image REQUIRED)
 set(SDL2_INCLUDE_DIRS "/usr/local/include/SDL2")
-
-include_directories(${SDL2_INCLUDE_DIRS})
+include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS})
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
