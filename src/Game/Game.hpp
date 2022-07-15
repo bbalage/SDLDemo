@@ -2,11 +2,11 @@
 #define SDLDEMO_GAME_GAME_H
 
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <memory>
 
-#define SCREEN_WIDTH 640
-#define SCREEN_HEIGHT 480
+#include "../Scene/SceneManager.hpp"
+
+#define SCREEN_WIDTH 1080
+#define SCREEN_HEIGHT 768
 
 class Game
 {
@@ -21,9 +21,8 @@ private:
     SDL_Window *m_pWindow;
     SDL_Renderer *m_pRenderer;
 
-    SDL_Texture *m_pTexture;
-    SDL_Rect m_sourceRectangle;
-    SDL_Rect m_destinationRectangle;
+    std::unique_ptr<SceneManager> m_pSceneManager;
+    Scene *m_pScene;
 };
 
 #endif

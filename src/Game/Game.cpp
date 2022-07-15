@@ -10,7 +10,7 @@ Game::Game()
         "hello_sdl2",
         SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
         SCREEN_WIDTH, SCREEN_HEIGHT,
-        SDL_WINDOW_SHOWN);
+        SDL_WINDOW_FULLSCREEN | SDL_WINDOW_SHOWN);
     if (m_pWindow == NULL)
     {
         std::runtime_error(std::string("Could not create window! ") + std::string(SDL_GetError()));
@@ -21,19 +21,10 @@ Game::Game()
     {
         std::runtime_error(std::string("Could not create renderer! ") + std::string(SDL_GetError()));
     }
-    SDL_Surface *pTempSurface = IMG_Load("assets/test_texture.png");
-    if (pTempSurface == NULL)
-    {
-        std::runtime_error(std::string("Could not load image!"));
-    }
-    m_pTexture = SDL_CreateTextureFromSurface(m_pRenderer, pTempSurface);
-    SDL_FreeSurface(pTempSurface);
-    SDL_QueryTexture(m_pTexture, NULL, NULL, &m_sourceRectangle.w, &m_sourceRectangle.h);
-    m_destinationRectangle.x = m_sourceRectangle.x = 0;
-    m_destinationRectangle.y = m_sourceRectangle.y = 0;
-    m_destinationRectangle.w = m_sourceRectangle.w;
-    m_destinationRectangle.h = m_sourceRectangle.h;
-    SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 255, 255);
+
+    m_pSceneManager.reset(new SceneManagerSDLSimple(m_pWindow, m_pRenderer));
+    m_pSceneManager->setScene(SceneType::SDL_GAME);
+    m_pScene = m_pSceneManager->getScene();
 }
 
 Game::~Game()
@@ -45,8 +36,15 @@ Game::~Game()
 
 void Game::run()
 {
-    SDL_RenderClear(m_pRenderer);
-    SDL_RenderCopy(m_pRenderer, m_pTexture, &m_sourceRectangle, &m_destinationRectangle);
-    SDL_RenderPresent(m_pRenderer);
-    SDL_Delay(5000);
+    while (m_pScene != nullptr)
+    {
+        m_pScene->handleEvents();
+        m_pScene->update();
+        m_pScene->render();
+        if (m_pScene->exit())
+        {
+            m_pSceneManager->setScene(m_pScene->nextSceneType());
+            m_pScene = m_pSceneManager->getScene();
+        }
+    }
 }
