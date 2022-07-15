@@ -21,7 +21,19 @@ Game::Game()
     {
         std::runtime_error(std::string("Could not create renderer! ") + std::string(SDL_GetError()));
     }
-    // TODO: SDL_Surface *pTempSurface = IMG_Load("assets/animate.png");
+    SDL_Surface *pTempSurface = IMG_Load("assets/test_texture.png");
+    if (pTempSurface == NULL)
+    {
+        std::runtime_error(std::string("Could not load image!"));
+    }
+    m_pTexture = SDL_CreateTextureFromSurface(m_pRenderer, pTempSurface);
+    SDL_FreeSurface(pTempSurface);
+    SDL_QueryTexture(m_pTexture, NULL, NULL, &m_sourceRectangle.w, &m_sourceRectangle.h);
+    m_destinationRectangle.x = m_sourceRectangle.x = 0;
+    m_destinationRectangle.y = m_sourceRectangle.y = 0;
+    m_destinationRectangle.w = m_sourceRectangle.w;
+    m_destinationRectangle.h = m_sourceRectangle.h;
+    SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 255, 255);
 }
 
 Game::~Game()
@@ -33,8 +45,8 @@ Game::~Game()
 
 void Game::run()
 {
-    auto screenSurface = SDL_GetWindowSurface(m_pWindow);
-    SDL_FillRect(screenSurface, NULL, SDL_MapRGB(screenSurface->format, 0xFF, 0xFF, 0xFF));
-    SDL_UpdateWindowSurface(m_pWindow);
-    SDL_Delay(2000);
+    SDL_RenderClear(m_pRenderer);
+    SDL_RenderCopy(m_pRenderer, m_pTexture, &m_sourceRectangle, &m_destinationRectangle);
+    SDL_RenderPresent(m_pRenderer);
+    SDL_Delay(5000);
 }

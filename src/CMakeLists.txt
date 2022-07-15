@@ -8,11 +8,11 @@ set(LIB_NAME ${CMAKE_PROJECT_NAME}_lib)
 add_library(${LIB_NAME} STATIC ${LIB_SOURCES} )
 target_link_libraries(${LIB_NAME}
                       ${SDL2_LIBRARIES}
-                      ${SDL2_image})
+                      ${SDL2_IMAGE_LIBRARIES})
 
 set(MAIN_EXECUTABLE_NAME ${CMAKE_PROJECT_NAME})
-add_executable(${MAIN_EXECUTABLE_NAME} "main.cpp" ${SDL2_LIBRARY})
+add_executable(${MAIN_EXECUTABLE_NAME} "main.cpp")
 target_link_libraries(${MAIN_EXECUTABLE_NAME}
     ${LIB_NAME}
     ${SDL2_LIBRARIES}
-    ${SDL2_image})
+    ${SDL2_IMAGE_LIBRARIES})
