@@ -10,7 +10,7 @@ Game::Game()
         "hello_sdl2",
         SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
         SCREEN_WIDTH, SCREEN_HEIGHT,
-        SDL_WINDOW_FULLSCREEN | SDL_WINDOW_SHOWN);
+        SDL_WINDOW_FULLSCREEN_DESKTOP | SDL_WINDOW_SHOWN);
     if (m_pWindow == NULL)
     {
         std::runtime_error(std::string("Could not create window! ") + std::string(SDL_GetError()));

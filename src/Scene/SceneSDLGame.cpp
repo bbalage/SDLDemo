@@ -16,6 +16,7 @@ SceneSDLGame::SceneSDLGame(SDL_Window *in_pWindow, SDL_Renderer *in_pRenderer) :
     m_destinationRectangle.w = m_sourceRectangle.w;
     m_destinationRectangle.h = m_sourceRectangle.h;
     SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 255, 255);
+    m_keystates = SDL_GetKeyboardState(NULL);
 }
 
 void SceneSDLGame::handleEvents()
@@ -28,13 +29,11 @@ void SceneSDLGame::handleEvents()
         case SDL_QUIT:
             m_exit = true;
             break;
-        case SDL_KEYDOWN:
-            m_exit = true;
-            break;
         default:
             break;
         }
     }
+    handleKeyBoardState();
 }
 
 void SceneSDLGame::update()
@@ -57,4 +56,28 @@ bool SceneSDLGame::exit()
 SceneType SceneSDLGame::nextSceneType()
 {
     return SceneType::SDL_EXIT;
+}
+
+void SceneSDLGame::handleKeyBoardState()
+{
+    if (m_keystates[SDL_SCANCODE_ESCAPE])
+    {
+        m_exit = true;
+    }
+    else if (m_keystates[SDL_SCANCODE_A])
+    {
+        m_destinationRectangle.x--;
+    }
+    else if (m_keystates[SDL_SCANCODE_D])
+    {
+        m_destinationRectangle.x++;
+    }
+    else if (m_keystates[SDL_SCANCODE_W])
+    {
+        m_destinationRectangle.y--;
+    }
+    else if (m_keystates[SDL_SCANCODE_S])
+    {
+        m_destinationRectangle.y++;
+    }
 }

@@ -50,10 +50,13 @@ public:
 
 private:
     bool m_exit;
+    const Uint8 *m_keystates;
 
     SDL_Texture *m_pTexture;
     SDL_Rect m_sourceRectangle;
     SDL_Rect m_destinationRectangle;
+
+    void handleKeyBoardState();
 };
 
 #endif
