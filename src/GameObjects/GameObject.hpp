@@ -2,13 +2,7 @@
 #define SDLDEMO_GAMEOBJECTS_GAMEOBJECT_H
 
 #include "SDL2/SDL.h"
-
-struct RenderInfo
-{
-    uint textureId;
-    uint spriteRow;
-    uint spriteCol;
-};
+#include "../render/renderUtils.hpp"
 
 class GameObject
 {
