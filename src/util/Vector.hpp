@@ -1,12 +1,12 @@
 #ifndef SDLDEMO_UTIL_VECTOR_H
 #define SDLDEMO_UTIL_VECTOR_H
 
-struct Vector2D
+struct Vec2
 {
-    Vector2D() : x(0), y(0) {}
-    Vector2D(int x, int y) : x(x), y(y) {}
+    Vec2() : x(0), y(0) {}
+    Vec2(int x, int y) : x(x), y(y) {}
 
-    void operator+=(const Vector2D &vec2);
+    void operator+=(const Vec2 &vec2);
 
     int x;
     int y;

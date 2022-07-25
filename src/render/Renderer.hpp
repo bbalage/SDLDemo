@@ -17,7 +17,8 @@ public:
 class RendererSDLGame : public Renderer
 {
 public:
-    RendererSDLGame(SDL_Renderer *in_pRenderer, SDLRenderCtx ctx) : m_pRenderer(in_pRenderer), ctx(ctx) {}
+    RendererSDLGame(SDL_Renderer *in_pRenderer) : m_pRenderer(in_pRenderer) {}
+    RendererSDLGame(SDL_Renderer *in_pRenderer, RenderCtx ctx) : m_pRenderer(in_pRenderer), ctx(ctx) {}
 
     void startRendering() override;
     void render(const RenderInfo &renderInfo) override;
@@ -25,7 +26,7 @@ public:
 
 private:
     SDL_Renderer *m_pRenderer;
-    SDLRenderCtx ctx;
+    RenderCtx ctx;
 };
 
 #endif

@@ -6,11 +6,22 @@
 #include <string>
 #include <stdexcept>
 #include <iostream>
+#include <memory>
+#include <utility>
+#include "../render/Renderer.hpp"
+#include "../GameObjects/GameObject.hpp"
+#include "../GameObjects/Player.hpp"
 
 enum struct SceneType : unsigned int
 {
     SDL_GAME,
     SDL_EXIT
+};
+
+struct SceneDescriptor
+{
+    std::string sceneName;
+    SceneType sceneType;
 };
 
 class Scene
@@ -29,18 +40,18 @@ public:
 class SceneSDL : public Scene
 {
 public:
-    SceneSDL(SDL_Window *in_pWindow, SDL_Renderer *in_pRenderer) : m_pWindow(in_pWindow), m_pRenderer(in_pRenderer) {}
+    SceneSDL(SDL_Window *in_pWindow, Renderer &in_Renderer) : m_pWindow(in_pWindow), m_Renderer(in_Renderer) {}
     virtual ~SceneSDL() = default;
 
 protected:
     SDL_Window *m_pWindow;
-    SDL_Renderer *m_pRenderer;
+    Renderer &m_Renderer;
 };
 
 class SceneSDLGame : public SceneSDL
 {
 public:
-    SceneSDLGame(SDL_Window *in_pWindow, SDL_Renderer *in_pRenderer);
+    SceneSDLGame(SDL_Window *in_pWindow, Renderer &in_Renderer);
 
     void handleEvents() override;
     void update() override;
@@ -51,10 +62,8 @@ public:
 private:
     bool m_exit;
     const Uint8 *m_keystates;
-
-    SDL_Texture *m_pTexture;
-    SDL_Rect m_sourceRectangle;
-    SDL_Rect m_destinationRectangle;
+    Player *player;
+    std::vector<std::unique_ptr<GameObject>> m_gameObjects;
 
     void handleKeyBoardState();
 };

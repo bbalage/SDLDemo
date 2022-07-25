@@ -1,21 +1,8 @@
 #include "Scene.hpp"
 
-SceneSDLGame::SceneSDLGame(SDL_Window *in_pWindow, SDL_Renderer *in_pRenderer) : SceneSDL(in_pWindow, in_pRenderer),
-                                                                                 m_exit(false)
+SceneSDLGame::SceneSDLGame(SDL_Window *in_pWindow, Renderer &in_pRenderer) : SceneSDL(in_pWindow, in_pRenderer),
+                                                                             m_exit(false)
 {
-    SDL_Surface *pTempSurface = IMG_Load("assets/test_texture.png");
-    if (pTempSurface == NULL)
-    {
-        std::runtime_error(std::string("Could not load image!"));
-    }
-    m_pTexture = SDL_CreateTextureFromSurface(m_pRenderer, pTempSurface);
-    SDL_FreeSurface(pTempSurface);
-    SDL_QueryTexture(m_pTexture, NULL, NULL, &m_sourceRectangle.w, &m_sourceRectangle.h);
-    m_destinationRectangle.x = m_sourceRectangle.x = 0;
-    m_destinationRectangle.y = m_sourceRectangle.y = 0;
-    m_destinationRectangle.w = m_sourceRectangle.w;
-    m_destinationRectangle.h = m_sourceRectangle.h;
-    SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 255, 255);
     m_keystates = SDL_GetKeyboardState(NULL);
 }
 
@@ -42,7 +29,12 @@ void SceneSDLGame::update()
 
 void SceneSDLGame::render()
 {
-
+    m_Renderer.startRendering();
+    for (std::unique_ptr<GameObject> &gameObject : m_gameObjects)
+    {
+        m_Renderer.render(gameObject->renderInfo());
+    }
+    m_Renderer.finishRendering();
     SDL_Delay(10);
 }
 

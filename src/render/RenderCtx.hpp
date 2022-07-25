@@ -3,24 +3,24 @@
 
 #include <SDL2/SDL.h>
 #include <vector>
+#include "renderUtils.hpp"
 
-class SDLRenderCtx
+class RenderCtx
 {
 public:
-    SDLRenderCtx() {}
+    RenderCtx() {}
 
-    SDL_Texture *texture(uint textureId);
+    Sprite *sprite(uint spriteId);
     /**
      * @brief Adds texture to context and returns the id of the texture.
      *
      * @param texture
      * @return uint
      */
-    uint addTexture(SDL_Texture *texture);
+    uint addSprite(Sprite sprite);
 
 private:
-    // TODO: Express that RenderCtx has ownership over textures!
-    std::vector<SDL_Texture *> textures;
+    std::vector<Sprite> sprites;
 };
 
 #endif

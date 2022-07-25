@@ -1,12 +1,12 @@
 #include "RenderCtx.hpp"
 
-SDL_Texture *SDLRenderCtx::texture(uint textureId)
+Sprite *RenderCtx::sprite(uint spriteId)
 {
-    return textures[textureId];
+    return &(sprites[spriteId]);
 }
 
-uint SDLRenderCtx::addTexture(SDL_Texture *texture)
+uint RenderCtx::addSprite(Sprite sprite)
 {
-    textures.push_back(texture);
-    return static_cast<uint>(textures.size() - 1);
+    sprites.push_back(sprite);
+    return static_cast<uint>(sprites.size() - 1);
 }

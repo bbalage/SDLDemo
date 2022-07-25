@@ -7,7 +7,15 @@ void RendererSDLGame::startRendering()
 
 void RendererSDLGame::render(const RenderInfo &renderInfo)
 {
-    SDL_RenderCopy(m_pRenderer, m_pTexture, &m_sourceRectangle, &m_destinationRectangle);
+    Sprite *pSprite = ctx.sprite(renderInfo.spriteId);
+    SDL_Rect sourceRect = pSprite->frameRect(renderInfo.spriteRow, renderInfo.spriteCol);
+    SDL_Rect destRect{
+        renderInfo.target.x,
+        renderInfo.target.y,
+        pSprite->frameWidth(),
+        pSprite->frameHeight()};
+
+    SDL_RenderCopy(m_pRenderer, pSprite->texture(), &sourceRect, &destRect);
 }
 
 void RendererSDLGame::finishRendering()

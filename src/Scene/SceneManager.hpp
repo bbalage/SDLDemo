@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <vector>
+#include <string_view>
 
 #include "Scene.hpp"
 
@@ -13,18 +14,18 @@ public:
     virtual ~SceneManager() = default;
 
     virtual Scene *getScene() = 0;
-    virtual void setScene(SceneType sceneType) = 0;
+    virtual void setScene(SceneDescriptor sceneDescriptor) = 0;
 };
 
 class SceneManagerSDL : public SceneManager
 {
 public:
-    SceneManagerSDL(SDL_Window *in_pWindow, SDL_Renderer *in_pRenderer) : m_pWindow(in_pWindow), m_pRenderer(in_pRenderer) {}
+    SceneManagerSDL(SDL_Window *in_pWindow, SDL_Renderer *in_pRenderer) : m_pWindow(in_pWindow), m_pSDLRenderer(in_pRenderer) {}
     virtual ~SceneManagerSDL() {}
 
 protected:
     SDL_Window *m_pWindow;
-    SDL_Renderer *m_pRenderer;
+    SDL_Renderer *m_pSDLRenderer;
 };
 
 class SceneManagerSDLSimple : public SceneManagerSDL
@@ -34,10 +35,13 @@ public:
     ~SceneManagerSDLSimple(){};
 
     Scene *getScene() override;
-    void setScene(SceneType sceneType) override;
+    void setScene(SceneDescriptor sceneDescriptor) override;
 
 private:
+    std::unique_ptr<Renderer> m_renderer;
     std::unique_ptr<Scene> currentScene;
+
+    void loadGameScene(std::string_view sceneName);
 };
 
 #endif
