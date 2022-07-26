@@ -10,7 +10,7 @@ public:
     Player(uint spriteId) : GameObject(spriteId) {}
 
     void update() override;
-    const RenderInfo &renderInfo() const override;
+    RenderInfo renderInfo() const override;
 
     // TODO: Remove:
     void move(Vec2 movement) { m_pos += movement; }

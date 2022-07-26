@@ -26,8 +26,6 @@ void SceneManagerSDLSimple::loadGameScene(std::string_view sceneName)
     // TODO: This should be more sophisticated!
     if (currentScene)
         return;
-    m_renderer.reset(new RendererSDLGame(m_pSDLRenderer));
-    RenderCtx renderCtx;
     SDL_Surface *pTempSurface = IMG_Load("assets/test_texture.png");
     if (pTempSurface == NULL)
     {
@@ -38,10 +36,10 @@ void SceneManagerSDLSimple::loadGameScene(std::string_view sceneName)
     SDL_Rect textureRect;
     SDL_QueryTexture(pTexture, NULL, NULL, &textureRect.w, &textureRect.h);
     Sprite sprite(pTexture, textureRect.w, textureRect.h);
-    renderCtx.addSprite(std::move(sprite));
-    // TODO: Add contect to renderer!
-    SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 255, 255);
-    renderCtx.addSprite(Sprite())
-        Scene *scene = new SceneSDLGame(m_pWindow);
-    currentScene.reset();
+    m_renderer.reset(new RendererSDLGame(m_pSDLRenderer));
+    uint spriteId = m_renderer->addSprite(std::move(sprite));
+
+    SceneSDLGame *scene = new SceneSDLGame(m_pWindow, *m_renderer);
+    scene->addGameObject(std::unique_ptr<GameObject>(new Player(spriteId)));
+    currentScene.reset(scene);
 }

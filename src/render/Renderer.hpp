@@ -2,7 +2,7 @@
 #define SDLDEMO_RENDER_RENDERER_H
 
 #include "renderUtils.hpp"
-#include "RenderCtx.hpp"
+#include <vector>
 
 class Renderer
 {
@@ -12,21 +12,29 @@ public:
     virtual void startRendering() = 0;
     virtual void render(const RenderInfo &renderInfo) = 0;
     virtual void finishRendering() = 0;
+    virtual uint addSprite(Sprite &&sprite) = 0;
 };
 
 class RendererSDLGame : public Renderer
 {
 public:
-    RendererSDLGame(SDL_Renderer *in_pRenderer) : m_pRenderer(in_pRenderer) {}
-    RendererSDLGame(SDL_Renderer *in_pRenderer, RenderCtx ctx) : m_pRenderer(in_pRenderer), ctx(ctx) {}
+    RendererSDLGame(SDL_Renderer *in_pRenderer);
 
     void startRendering() override;
     void render(const RenderInfo &renderInfo) override;
     void finishRendering() override;
 
+    /**
+     * @brief Adds sprite to context and returns the id of the sprite.
+     *
+     * @param sprite
+     * @return uint
+     */
+    uint addSprite(Sprite &&sprite) override;
+
 private:
     SDL_Renderer *m_pRenderer;
-    RenderCtx ctx;
+    std::vector<Sprite> sprites;
 };
 
 #endif

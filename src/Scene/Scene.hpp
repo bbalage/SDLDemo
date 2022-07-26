@@ -34,7 +34,7 @@ public:
     virtual void update() = 0;
     virtual void render() = 0;
     virtual bool exit() = 0;
-    virtual SceneType nextSceneType() = 0;
+    virtual SceneDescriptor nextSceneDescriptor() = 0;
 };
 
 class SceneSDL : public Scene
@@ -57,7 +57,13 @@ public:
     void update() override;
     void render() override;
     bool exit() override;
-    SceneType nextSceneType() override;
+    SceneDescriptor nextSceneDescriptor() override;
+
+    // Temporary:
+    void addGameObject(std::unique_ptr<GameObject> gameObject)
+    {
+        m_gameObjects.push_back(std::move(gameObject));
+    }
 
 private:
     bool m_exit;

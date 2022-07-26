@@ -11,7 +11,7 @@ public:
     virtual ~GameObject() {}
 
     virtual void update() = 0;
-    virtual const RenderInfo &renderInfo() const = 0;
+    virtual RenderInfo renderInfo() const = 0;
 
 protected:
     uint m_spriteId;

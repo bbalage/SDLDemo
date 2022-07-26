@@ -4,7 +4,7 @@ void Player::update()
 {
 }
 
-const RenderInfo &Player::renderInfo() const
+RenderInfo Player::renderInfo() const
 {
     return RenderInfo{
         m_spriteId,

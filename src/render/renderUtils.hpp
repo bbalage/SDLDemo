@@ -2,6 +2,7 @@
 #define SDLDEMO_RENDER_RENDERUTILS_H
 
 #include "../util/Vector.hpp"
+#include <SDL2/SDL.h>
 
 class Sprite
 {
@@ -12,8 +13,8 @@ public:
     ~Sprite() { SDL_DestroyTexture(m_pTexture); }
     Sprite(const Sprite &) = delete;
     Sprite &operator=(const Sprite &) = delete;
-    Sprite(const Sprite &&) = default;
-    Sprite &operator=(const Sprite &&) = default;
+    Sprite(Sprite &&) = default;
+    Sprite &operator=(Sprite &&) = default;
 
     SDL_Texture *texture() { return m_pTexture; }
     SDL_Rect frameRect(int spriteRow, int spriteCol) const

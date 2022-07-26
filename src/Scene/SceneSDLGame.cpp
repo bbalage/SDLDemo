@@ -43,9 +43,9 @@ bool SceneSDLGame::exit()
     return m_exit;
 }
 
-SceneType SceneSDLGame::nextSceneType()
+SceneDescriptor SceneSDLGame::nextSceneDescriptor()
 {
-    return SceneType::SDL_EXIT;
+    return SceneDescriptor{std::string("noname"), SceneType::SDL_EXIT};
 }
 
 void SceneSDLGame::handleKeyBoardState()
@@ -54,20 +54,20 @@ void SceneSDLGame::handleKeyBoardState()
     {
         m_exit = true;
     }
-    else if (m_keystates[SDL_SCANCODE_A])
-    {
-        m_destinationRectangle.x--;
-    }
-    else if (m_keystates[SDL_SCANCODE_D])
-    {
-        m_destinationRectangle.x++;
-    }
-    else if (m_keystates[SDL_SCANCODE_W])
-    {
-        m_destinationRectangle.y--;
-    }
-    else if (m_keystates[SDL_SCANCODE_S])
-    {
-        m_destinationRectangle.y++;
-    }
+    // else if (m_keystates[SDL_SCANCODE_A])
+    // {
+    //     m_destinationRectangle.x--;
+    // }
+    // else if (m_keystates[SDL_SCANCODE_D])
+    // {
+    //     m_destinationRectangle.x++;
+    // }
+    // else if (m_keystates[SDL_SCANCODE_W])
+    // {
+    //     m_destinationRectangle.y--;
+    // }
+    // else if (m_keystates[SDL_SCANCODE_S])
+    // {
+    //     m_destinationRectangle.y++;
+    // }
 }

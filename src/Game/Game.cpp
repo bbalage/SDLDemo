@@ -23,7 +23,7 @@ Game::Game()
     }
 
     m_pSceneManager.reset(new SceneManagerSDLSimple(m_pWindow, m_pRenderer));
-    m_pSceneManager->setScene(SceneType::SDL_GAME);
+    m_pSceneManager->setScene(SceneDescriptor{"noname", SceneType::SDL_GAME});
     m_pScene = m_pSceneManager->getScene();
 }
 
@@ -43,7 +43,7 @@ void Game::run()
         m_pScene->render();
         if (m_pScene->exit())
         {
-            m_pSceneManager->setScene(m_pScene->nextSceneType());
+            m_pSceneManager->setScene(m_pScene->nextSceneDescriptor());
             m_pScene = m_pSceneManager->getScene();
         }
     }
