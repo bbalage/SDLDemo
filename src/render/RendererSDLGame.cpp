@@ -20,7 +20,9 @@ void RendererSDLGame::render(const RenderInfo &renderInfo)
         pSprite->frameWidth(),
         pSprite->frameHeight()};
 
-    SDL_RenderCopy(m_pRenderer, pSprite->texture(), &sourceRect, &destRect);
+    int code = SDL_RenderCopy(m_pRenderer, pSprite->texture(), &sourceRect, &destRect);
+    if (code == -1)
+        std::cout << "Error: " << SDL_GetError() << std::endl;
 }
 
 void RendererSDLGame::finishRendering()

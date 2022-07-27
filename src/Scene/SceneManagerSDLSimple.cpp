@@ -26,7 +26,8 @@ void SceneManagerSDLSimple::loadGameScene(std::string_view sceneName)
     // TODO: This should be more sophisticated!
     if (currentScene)
         return;
-    SDL_Surface *pTempSurface = IMG_Load("assets/test_texture.png");
+    // SDL_Surface *pTempSurface = IMG_Load("assets/test_texture.png");
+    SDL_Surface *pTempSurface = IMG_Load("/home/bbalage/cpp/SDLDemo/assets/textures/test_pair.png");
     if (pTempSurface == NULL)
     {
         std::runtime_error(std::string("Could not load image!"));

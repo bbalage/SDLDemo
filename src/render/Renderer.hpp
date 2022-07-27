@@ -1,7 +1,8 @@
 #ifndef SDLDEMO_RENDER_RENDERER_H
 #define SDLDEMO_RENDER_RENDERER_H
 
-#include "renderUtils.hpp"
+#include "Sprite.hpp"
+#include <iostream>
 #include <vector>
 
 class Renderer
