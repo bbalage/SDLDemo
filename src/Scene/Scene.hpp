@@ -60,15 +60,16 @@ public:
     SceneDescriptor nextSceneDescriptor() override;
 
     // Temporary:
-    void addGameObject(std::unique_ptr<GameObject> gameObject)
+    void addPlayer(std::unique_ptr<Player> player)
     {
-        m_gameObjects.push_back(std::move(gameObject));
+        m_pPlayer = player.get();
+        m_gameObjects.push_back(std::move(player));
     }
 
 private:
     bool m_exit;
     const Uint8 *m_keystates;
-    Player *player;
+    Player *m_pPlayer;
     std::vector<std::unique_ptr<GameObject>> m_gameObjects;
 
     void handleKeyBoardState();

@@ -41,6 +41,6 @@ void SceneManagerSDLSimple::loadGameScene(std::string_view sceneName)
     uint spriteId = m_renderer->addSprite(std::move(sprite));
 
     SceneSDLGame *scene = new SceneSDLGame(m_pWindow, *m_renderer);
-    scene->addGameObject(std::unique_ptr<GameObject>(new Player(spriteId)));
+    scene->addPlayer(std::unique_ptr<Player>(new Player(spriteId)));
     currentScene.reset(scene);
 }

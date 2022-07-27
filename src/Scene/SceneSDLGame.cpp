@@ -54,20 +54,20 @@ void SceneSDLGame::handleKeyBoardState()
     {
         m_exit = true;
     }
-    // else if (m_keystates[SDL_SCANCODE_A])
-    // {
-    //     m_destinationRectangle.x--;
-    // }
-    // else if (m_keystates[SDL_SCANCODE_D])
-    // {
-    //     m_destinationRectangle.x++;
-    // }
-    // else if (m_keystates[SDL_SCANCODE_W])
-    // {
-    //     m_destinationRectangle.y--;
-    // }
-    // else if (m_keystates[SDL_SCANCODE_S])
-    // {
-    //     m_destinationRectangle.y++;
-    // }
+    else if (m_keystates[SDL_SCANCODE_A])
+    {
+        m_pPlayer->move(Vec2{-1, 0});
+    }
+    else if (m_keystates[SDL_SCANCODE_D])
+    {
+        m_pPlayer->move(Vec2{1, 0});
+    }
+    else if (m_keystates[SDL_SCANCODE_W])
+    {
+        m_pPlayer->move(Vec2{0, -1});
+    }
+    else if (m_keystates[SDL_SCANCODE_S])
+    {
+        m_pPlayer->move(Vec2{0, 1});
+    }
 }
