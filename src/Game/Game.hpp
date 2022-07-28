@@ -4,6 +4,7 @@
 #include <SDL2/SDL.h>
 
 #include "../Scene/SceneManager.hpp"
+#include "../util/SDLUtils.hpp"
 
 #define SCREEN_WIDTH 1080
 #define SCREEN_HEIGHT 768
@@ -17,9 +18,8 @@ public:
     void run();
 
 private:
-    // TODO: Make into unique pointer with custom deleter.
-    SDL_Window *m_pWindow;
-    SDL_Renderer *m_pRenderer;
+    std::unique_ptr<SDL_Window, SDLWindowDeleter> m_pWindow;
+    std::unique_ptr<SDL_Renderer, SDLRendererDeleter> m_pRenderer;
 
     std::unique_ptr<SceneManager> m_pSceneManager;
     Scene *m_pScene;

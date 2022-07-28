@@ -6,31 +6,32 @@ Game::Game()
     {
         std::runtime_error(std::string("Could not initialize SDL2! ") + std::string(SDL_GetError()));
     }
-    m_pWindow = SDL_CreateWindow(
+    SDL_Window *pWindow = SDL_CreateWindow(
         "hello_sdl2",
         SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
         SCREEN_WIDTH, SCREEN_HEIGHT,
         SDL_WINDOW_FULLSCREEN_DESKTOP | SDL_WINDOW_SHOWN);
-    if (m_pWindow == NULL)
+    if (pWindow == nullptr)
     {
         std::runtime_error(std::string("Could not create window! ") + std::string(SDL_GetError()));
     }
-
-    m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, 0);
-    if (m_pRenderer == NULL)
+    m_pWindow = std::unique_ptr<SDL_Window, SDLWindowDeleter>(pWindow, SDLWindowDeleter{});
+    pWindow = nullptr;
+    SDL_Renderer *pRenderer = SDL_CreateRenderer(m_pWindow.get(), -1, 0);
+    if (pRenderer == nullptr)
     {
         std::runtime_error(std::string("Could not create renderer! ") + std::string(SDL_GetError()));
     }
+    m_pRenderer = std::unique_ptr<SDL_Renderer, SDLRendererDeleter>(pRenderer, SDLRendererDeleter{});
+    pRenderer = nullptr;
 
-    m_pSceneManager.reset(new SceneManagerSDLSimple(m_pWindow, m_pRenderer));
+    m_pSceneManager.reset(new SceneManagerSDLSimple(m_pWindow.get(), m_pRenderer.get()));
     m_pSceneManager->setScene(SceneDescriptor{"noname", SceneType::SDL_GAME});
     m_pScene = m_pSceneManager->getScene();
 }
 
 Game::~Game()
 {
-    SDL_DestroyRenderer(m_pRenderer);
-    SDL_DestroyWindow(m_pWindow);
     SDL_Quit();
 }
 
