@@ -9,7 +9,7 @@
     <gameObjects>
         <gameObject>
             <name>DeathTrap</name>
-            <sprite>DeathTrap.png</sprite>
+            <sprite>DeathTrap</sprite>
             <pos>
                 <x>100</x>
                 <y>100</y>
@@ -17,7 +17,7 @@
         </gameObject>
         <gameObject>
             <name>DeathTrap</name>
-            <sprite>DeathTrap.png</sprite>
+            <sprite>DeathTrap</sprite>
             <pos>
                 <x>200</x>
                 <y>200</y>
@@ -25,7 +25,7 @@
         </gameObject>
         <gameObject>
             <name>SmallFloorTile</name>
-            <sprite>SmallFloorTile.png</sprite>
+            <sprite>SmallFloorTile</sprite>
             <pos>
                 <x>100</x>
                 <y>100</y>

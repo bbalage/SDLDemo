@@ -4,8 +4,9 @@
 #include <memory>
 #include <vector>
 #include <string_view>
-
+#include <unordered_map>
 #include "Scene.hpp"
+#include "SceneLoader.hpp"
 
 class SceneManager
 {
@@ -31,7 +32,7 @@ protected:
 class SceneManagerSDLSimple : public SceneManagerSDL
 {
 public:
-    SceneManagerSDLSimple(SDL_Window *in_pWindow, SDL_Renderer *in_pRenderer) : SceneManagerSDL(in_pWindow, in_pRenderer) {}
+    SceneManagerSDLSimple(SDL_Window *in_pWindow, SDL_Renderer *in_pRenderer);
     ~SceneManagerSDLSimple(){};
 
     Scene *getScene() override;
@@ -39,7 +40,8 @@ public:
 
 private:
     std::unique_ptr<Renderer> m_renderer;
-    std::unique_ptr<Scene> currentScene;
+    std::unique_ptr<Scene> m_currentScene;
+    std::unordered_map<SceneType, std::unique_ptr<SceneLoader>> m_sceneLoaders;
 
     void loadGameScene(std::string_view sceneName);
 };

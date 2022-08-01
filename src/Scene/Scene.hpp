@@ -29,6 +29,8 @@ class Scene
 public:
     Scene() = default;
     virtual ~Scene() = default;
+    Scene(const Scene &) = delete;
+    Scene &operator=(const Scene &) = delete;
 
     virtual void handleEvents() = 0;
     virtual void update() = 0;

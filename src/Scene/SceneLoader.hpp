@@ -3,27 +3,33 @@
 
 #include <SDL2/SDL.h>
 #include "Scene.hpp"
+#include "../util/FileUtils.hpp"
 
 class SceneLoader
 {
 public:
     SceneLoader() {}
+    virtual ~SceneLoader() {}
 
-    virtual void loadScene(std::string_view sceneName) = 0;
+    virtual std::unique_ptr<Scene> loadScene(std::string_view sceneName) = 0;
 };
 
-class SceneLoaderGame : public SceneLoader
+class SceneLoaderSDLGame : public SceneLoader
 {
 public:
-    SceneLoaderGame() {}
-    void loadScene(std::string_view sceneName) override;
+    SceneLoaderSDLGame(SDL_Window *in_pWindow, SDL_Renderer *in_pRenderer) {}
+    std::unique_ptr<Scene> loadScene(std::string_view sceneName) override;
+
+private:
 };
 
-class SceneLoaderExit : public SceneLoader
+class SceneLoaderSDLExit : public SceneLoader
 {
 public:
-    SceneLoaderExit() {}
-    void loadScene(std::string_view sceneName) override;
+    SceneLoaderSDLExit() {}
+    std::unique_ptr<Scene> loadScene(std::string_view sceneName) override;
+
+private:
 };
 
 #endif
