@@ -2,7 +2,6 @@
 #define SDLDEMO_SCENE_SCENE_H
 
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
 #include <string>
 #include <stdexcept>
 #include <iostream>
@@ -11,12 +10,7 @@
 #include "../render/Renderer.hpp"
 #include "../GameObjects/GameObject.hpp"
 #include "../GameObjects/Player.hpp"
-
-enum struct SceneType : unsigned int
-{
-    SDL_GAME,
-    SDL_EXIT
-};
+#include "sceneUtils.hpp"
 
 struct SceneDescriptor
 {

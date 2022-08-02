@@ -1,21 +1,21 @@
 #include "FileUtils.hpp"
 
-constexpr char sdlutils::separator()
+constexpr char sdldemo::separator()
 {
     return std::filesystem::path::preferred_separator;
 }
 
-std::string sdlutils::descriptorsDir()
+std::string sdldemo::descriptorsDir()
 {
-    return std::string("assets") + sdlutils::separator() + std::string("descriptors");
+    return std::string("assets") + sdldemo::separator() + std::string("descriptors");
 }
 
-std::string sdlutils::texturesDir()
+std::string sdldemo::texturesDir()
 {
-    return std::string("assets") + sdlutils::separator() + std::string("textures");
+    return std::string("assets") + sdldemo::separator() + std::string("textures");
 }
 
-std::string sdlutils::fileContentToString(std::string filepath)
+std::string sdldemo::fileContentToString(std::string filepath)
 {
     std::ifstream infstream(filepath);
     std::stringstream buffer;

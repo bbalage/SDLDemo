@@ -8,7 +8,10 @@
 class Renderer
 {
 public:
+    Renderer() {}
     virtual ~Renderer() {}
+    Renderer(const Renderer &) = delete;
+    Renderer &operator=(const Renderer &) = delete;
 
     virtual void startRendering() = 0;
     virtual void render(const RenderInfo &renderInfo) = 0;

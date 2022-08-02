@@ -6,7 +6,7 @@
 #include <sstream>
 #include <filesystem>
 
-namespace sdlutils
+namespace sdldemo
 {
     constexpr char separator();
     std::string descriptorsDir();

@@ -3,6 +3,8 @@
 
 #include <SDL2/SDL.h>
 #include <iostream>
+#include <memory>
+#include <SDL2/SDL_image.h>
 
 struct SDLWindowDeleter
 {
@@ -18,4 +20,9 @@ struct SDLTextureDeleter
 {
     void operator()(SDL_Texture *texture);
 };
+
+namespace sdldemo
+{
+    std::unique_ptr<SDL_Texture, SDLTextureDeleter> loadTexture(std::string_view filePath, SDL_Renderer *pSDLRenderer);
+}
 #endif
