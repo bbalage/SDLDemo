@@ -19,10 +19,13 @@ public:
 
 private:
     std::unique_ptr<SDL_Window, SDLWindowDeleter> m_pWindow;
-    std::unique_ptr<SDL_Renderer, SDLRendererDeleter> m_pRenderer;
+    std::unique_ptr<SDL_Renderer, SDLRendererDeleter> m_pSDLRenderer;
+    std::unique_ptr<RendererCreator> m_pRendererCreator;
+    std::unique_ptr<Parser> m_pParser;
+    std::unique_ptr<Scene> m_pScene;
+    std::unordered_map<SceneType, std::unique_ptr<SceneLoader>> m_sceneLoaders;
 
-    std::unique_ptr<SceneManager> m_pSceneManager;
-    Scene *m_pScene;
+    void setScene(SceneSwitchDescriptor sceneDescriptor);
 };
 
 #endif

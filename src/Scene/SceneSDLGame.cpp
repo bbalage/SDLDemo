@@ -43,9 +43,9 @@ bool SceneSDLGame::exit()
     return m_exit;
 }
 
-SceneDescriptor SceneSDLGame::nextSceneDescriptor()
+SceneSwitchDescriptor SceneSDLGame::nextSceneDescriptor()
 {
-    return SceneDescriptor{std::string("noname"), SceneType::SDL_EXIT};
+    return SceneSwitchDescriptor{std::string("noname"), SceneType::SDL_EXIT};
 }
 
 void SceneSDLGame::handleKeyBoardState()

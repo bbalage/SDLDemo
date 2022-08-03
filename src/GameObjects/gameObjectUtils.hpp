@@ -1,0 +1,10 @@
+#ifndef SDLDEMO_GAMEOBJECT_GAMEOBJECTUTILS_H
+#define SDLDEMO_GAMEOBJECT_GAMEOBJECTUTILS_H
+
+enum struct GameObjectType
+{
+    TRAP,
+    BACKGROUND
+};
+
+#endif

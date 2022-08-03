@@ -5,6 +5,7 @@
 #include "Scene.hpp"
 #include "../render/RendererCreator.hpp"
 #include "../util/FileUtils.hpp"
+#include "../Parser/Parser.hpp"
 
 class SceneLoader
 {
@@ -34,12 +35,15 @@ protected:
 class SceneLoaderSDLGame : public SceneLoader
 {
 public:
-    SceneLoaderSDLGame(SDL_Window *in_pWindow, const RendererCreator &rendererCreator) : m_rendererCreator(rendererCreator) {}
+    SceneLoaderSDLGame(SDL_Window *in_pWindow, const RendererCreator &rendererCreator, const Parser &parser)
+        : m_rendererCreator(rendererCreator),
+          m_parser(parser) {}
     std::unique_ptr<Scene> loadScene(std::string_view sceneName) override;
 
 private:
     SDL_Window *m_pWindow;
     const RendererCreator &m_rendererCreator;
+    const Parser &m_parser;
 };
 
 class SceneLoaderSDLExit : public SceneLoader

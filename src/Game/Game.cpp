@@ -1,4 +1,5 @@
 #include "Game.hpp"
+#include "../Scene/SceneLoader.hpp"
 
 Game::Game()
 {
@@ -22,12 +23,15 @@ Game::Game()
     {
         std::runtime_error(std::string("Could not create renderer! ") + std::string(SDL_GetError()));
     }
-    m_pRenderer = std::unique_ptr<SDL_Renderer, SDLRendererDeleter>(pRenderer, SDLRendererDeleter{});
+    m_pSDLRenderer = std::unique_ptr<SDL_Renderer, SDLRendererDeleter>(pRenderer, SDLRendererDeleter{});
     pRenderer = nullptr;
+    m_pRendererCreator.reset(new RendererCreatorSDL(m_pSDLRenderer.get()));
+    m_pParser.reset(new ParserXML);
 
-    m_pSceneManager.reset(new SceneManagerSDLSimple(m_pWindow.get(), m_pRenderer.get()));
-    m_pSceneManager->setScene(SceneDescriptor{"noname", SceneType::SDL_GAME});
-    m_pScene = m_pSceneManager->getScene();
+    m_sceneLoaders[SceneType::SDL_GAME] = std::unique_ptr<SceneLoader>(new SceneLoaderSDLGame(m_pWindow.get(), *m_pRendererCreator, *m_pParser));
+    m_sceneLoaders[SceneType::SDL_EXIT] = std::unique_ptr<SceneLoader>(new SceneLoaderSDLExit);
+
+    setScene(SceneSwitchDescriptor{"noname", SceneType::SDL_GAME});
 }
 
 Game::~Game()
@@ -37,15 +41,19 @@ Game::~Game()
 
 void Game::run()
 {
-    while (m_pScene != nullptr)
+    while (m_pScene)
     {
         m_pScene->handleEvents();
         m_pScene->update();
         m_pScene->render();
         if (m_pScene->exit())
         {
-            m_pSceneManager->setScene(m_pScene->nextSceneDescriptor());
-            m_pScene = m_pSceneManager->getScene();
+            setScene(m_pScene->nextSceneDescriptor());
         }
     }
+}
+
+void Game::setScene(SceneSwitchDescriptor sceneDescriptor)
+{
+    m_pScene = m_sceneLoaders[sceneDescriptor.sceneType]->loadScene(sceneDescriptor.sceneName);
 }

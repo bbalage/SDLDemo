@@ -12,7 +12,7 @@
 #include "../GameObjects/Player.hpp"
 #include "sceneUtils.hpp"
 
-struct SceneDescriptor
+struct SceneSwitchDescriptor
 {
     std::string sceneName;
     SceneType sceneType;
@@ -30,7 +30,7 @@ public:
     virtual void update() = 0;
     virtual void render() = 0;
     virtual bool exit() = 0;
-    virtual SceneDescriptor nextSceneDescriptor() = 0;
+    virtual SceneSwitchDescriptor nextSceneDescriptor() = 0;
 };
 
 class SceneSDL : public Scene
@@ -53,7 +53,7 @@ public:
     void update() override;
     void render() override;
     bool exit() override;
-    SceneDescriptor nextSceneDescriptor() override;
+    SceneSwitchDescriptor nextSceneDescriptor() override;
 
     // Temporary:
     void addPlayer(std::unique_ptr<Player> player)

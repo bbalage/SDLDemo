@@ -11,7 +11,7 @@ namespace sdldemo
     constexpr char separator();
     std::string descriptorsDir();
     std::string texturesDir();
-    std::string fileContentToString(std::string filepath);
+    std::string fileContentToString(std::string_view filepath);
 }
 
 #endif
