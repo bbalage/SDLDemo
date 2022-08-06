@@ -1,8 +1,17 @@
 #include "Scene.hpp"
 
-SceneSDLGame::SceneSDLGame(SDL_Window *in_pWindow, Renderer &in_pRenderer) : SceneSDL(in_pWindow, in_pRenderer),
-                                                                             m_exit(false)
+SceneSDLGame::SceneSDLGame(SDL_Window *in_pWindow,
+                           Renderer &in_pRenderer,
+                           std::unique_ptr<Player> player,
+                           std::vector<std::unique_ptr<GameObject>> gameObjects) : SceneSDL(in_pWindow, in_pRenderer),
+                                                                                   m_pPlayer(player.get()),
+                                                                                   m_exit(false)
 {
+    for (auto &gameObject : gameObjects)
+    {
+        m_gameObjects.push_back(std::move(gameObject));
+    }
+    m_gameObjects.push_back(std::move(player));
     m_keystates = SDL_GetKeyboardState(NULL);
 }
 

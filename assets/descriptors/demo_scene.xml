@@ -1,6 +1,6 @@
 <scene>
     <player>
-        <sprite>test_pair.png</sprite>
+        <sprite>TestPair</sprite>
         <pos>
             <x>20</x>
             <y>50</y>

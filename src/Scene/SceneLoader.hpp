@@ -22,21 +22,22 @@ public:
     virtual std::unique_ptr<Scene> loadScene(std::string_view sceneName) = 0;
 };
 
-class SceneLoaderSDL
+class SceneLoaderSDL : public SceneLoader
 {
 public:
     SceneLoaderSDL() {}
     virtual ~SceneLoaderSDL() {}
 
 protected:
-    Sprite readSprite(std::string_view spritePath, int frameWidth, int frameHeight);
+    std::vector<Sprite> readRequiredSprites(const SceneDescriptor &sceneDescriptor);
 };
 
-class SceneLoaderSDLGame : public SceneLoader
+class SceneLoaderSDLGame : public SceneLoaderSDL
 {
 public:
     SceneLoaderSDLGame(SDL_Window *in_pWindow, const RendererCreator &rendererCreator, const Parser &parser)
-        : m_rendererCreator(rendererCreator),
+        : m_pWindow(in_pWindow),
+          m_rendererCreator(rendererCreator),
           m_parser(parser) {}
     std::unique_ptr<Scene> loadScene(std::string_view sceneName) override;
 
@@ -51,8 +52,6 @@ class SceneLoaderSDLExit : public SceneLoader
 public:
     SceneLoaderSDLExit() {}
     std::unique_ptr<Scene> loadScene(std::string_view sceneName) override;
-
-private:
 };
 
 #endif

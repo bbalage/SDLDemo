@@ -47,20 +47,16 @@ protected:
 class SceneSDLGame : public SceneSDL
 {
 public:
-    SceneSDLGame(SDL_Window *in_pWindow, Renderer &in_Renderer);
+    SceneSDLGame(SDL_Window *in_pWindow,
+                 Renderer &in_Renderer,
+                 std::unique_ptr<Player> player,
+                 std::vector<std::unique_ptr<GameObject>> gameObjects);
 
     void handleEvents() override;
     void update() override;
     void render() override;
     bool exit() override;
     SceneSwitchDescriptor nextSceneDescriptor() override;
-
-    // Temporary:
-    void addPlayer(std::unique_ptr<Player> player)
-    {
-        m_pPlayer = player.get();
-        m_gameObjects.push_back(std::move(player));
-    }
 
 private:
     bool m_exit;

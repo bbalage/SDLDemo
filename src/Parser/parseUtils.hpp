@@ -4,6 +4,8 @@
 #include <vector>
 #include <string>
 
+#include "../GameObjects/gameObjectUtils.hpp"
+
 struct SpriteDescriptor
 {
     std::string spritePath;
@@ -13,7 +15,14 @@ struct SpriteDescriptor
 
 struct GameObjectDescriptor
 {
+    GameObjectType type;
+    std::string spriteName;
+    int posX;
+    int posY;
+};
 
+struct PlayerDescriptor
+{
     std::string spriteName;
     int posX;
     int posY;
@@ -21,7 +30,7 @@ struct GameObjectDescriptor
 
 struct SceneDescriptor
 {
+    PlayerDescriptor playerDescriptor;
     std::vector<GameObjectDescriptor> gameObjectDescriptors;
 };
-
 #endif

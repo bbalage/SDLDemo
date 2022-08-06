@@ -1,8 +1,11 @@
 #include "Renderer.hpp"
 
-RendererSDLGame::RendererSDLGame(SDL_Renderer *in_pRenderer, std::vector<Sprite> &&sprites) : m_pRenderer(in_pRenderer),
-                                                                                              m_sprites(sprites)
+RendererSDLGame::RendererSDLGame(SDL_Renderer *in_pRenderer, std::vector<Sprite> &&sprites) : m_pRenderer(in_pRenderer)
 {
+    for (Sprite &sprite : sprites)
+    {
+        m_sprites.push_back(std::move(sprite));
+    }
     SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 255, 255);
 }
 

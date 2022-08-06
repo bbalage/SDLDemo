@@ -3,8 +3,10 @@
 
 #include <SDL2/SDL.h>
 
-#include "../Scene/SceneManager.hpp"
 #include "../util/SDLUtils.hpp"
+#include "../render/RendererCreator.hpp"
+#include "../Parser/Parser.hpp"
+#include "../Scene/SceneLoader.hpp"
 
 #define SCREEN_WIDTH 1080
 #define SCREEN_HEIGHT 768
