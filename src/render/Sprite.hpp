@@ -9,9 +9,9 @@ class Sprite
 {
 public:
     Sprite(
-        SDL_Texture *pTexture,
+        std::unique_ptr<SDL_Texture, SDLTextureDeleter> pTexture,
         int frameWidth,
-        int frameHeight) : m_pTexture(std::unique_ptr<SDL_Texture, SDLTextureDeleter>(pTexture, SDLTextureDeleter{})),
+        int frameHeight) : m_pTexture(std::move(pTexture)),
                            m_frameWidth(frameWidth),
                            m_frameHeight(frameHeight) {}
     ~Sprite() {}

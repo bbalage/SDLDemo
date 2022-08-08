@@ -31,7 +31,7 @@ Game::Game()
     m_sceneLoaders[SceneType::SDL_GAME] = std::unique_ptr<SceneLoader>(new SceneLoaderSDLGame(m_pWindow.get(), *m_pRendererCreator, *m_pParser));
     m_sceneLoaders[SceneType::SDL_EXIT] = std::unique_ptr<SceneLoader>(new SceneLoaderSDLExit);
 
-    setScene(SceneSwitchDescriptor{"noname", SceneType::SDL_GAME});
+    setScene(SceneSwitchDescriptor{"demo_scene", SceneType::SDL_GAME});
 }
 
 Game::~Game()

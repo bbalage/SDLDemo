@@ -1,20 +1,31 @@
 #include "Renderer.hpp"
 
-RendererSDLGame::RendererSDLGame(SDL_Renderer *in_pRenderer, std::vector<Sprite> &&sprites) : m_pRenderer(in_pRenderer)
+#include "../Parser/parseUtils.hpp"
+#include "../Game/GameData.hpp"
+
+RendererSDLGamePreloadSprites::RendererSDLGamePreloadSprites(
+    SDL_Renderer *in_pRenderer,
+    const std::unordered_set<std::string> &requiredSpriteNames) : m_pRenderer(in_pRenderer)
 {
-    for (Sprite &sprite : sprites)
+    for (const std::string &spriteName : requiredSpriteNames)
     {
+        const SpriteDescriptor &spriteDescriptor = GameData::instance().spriteDescriptors().at(spriteName);
+        Sprite sprite{
+            sdldemo::loadTexture(spriteDescriptor.spritePath, m_pRenderer),
+            spriteDescriptor.frameWidth,
+            spriteDescriptor.frameHeight};
+        m_spriteNameMap[spriteName] = static_cast<uint>(m_sprites.size());
         m_sprites.push_back(std::move(sprite));
     }
     SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 255, 255);
 }
 
-void RendererSDLGame::startRendering()
+void RendererSDLGamePreloadSprites::startRendering()
 {
     SDL_RenderClear(m_pRenderer);
 }
 
-void RendererSDLGame::render(const RenderInfo &renderInfo)
+void RendererSDLGamePreloadSprites::render(const RenderInfo &renderInfo)
 {
     Sprite *pSprite = &(m_sprites[renderInfo.spriteId]);
     SDL_Rect sourceRect = pSprite->frameRect(renderInfo.spriteRow, renderInfo.spriteCol);
@@ -28,7 +39,12 @@ void RendererSDLGame::render(const RenderInfo &renderInfo)
     SDL_RenderCopy(m_pRenderer, pSprite->texture(), &sourceRect, &destRect);
 }
 
-void RendererSDLGame::finishRendering()
+void RendererSDLGamePreloadSprites::finishRendering()
 {
     SDL_RenderPresent(m_pRenderer);
+}
+
+uint RendererSDLGamePreloadSprites::idForName(const std::string &spriteName) const
+{
+    return m_spriteNameMap.at(spriteName);
 }

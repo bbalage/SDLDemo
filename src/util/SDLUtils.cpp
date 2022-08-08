@@ -20,7 +20,7 @@ void SDLTextureDeleter::operator()(SDL_Texture *texture)
 
 std::unique_ptr<SDL_Texture, SDLTextureDeleter> sdldemo::loadTexture(std::string_view filePath, SDL_Renderer *pSDLRenderer)
 {
-    SDL_Surface *pTempSurface = IMG_Load("assets/textures/TestPair.png");
+    SDL_Surface *pTempSurface = IMG_Load(filePath.data());
     if (pTempSurface == NULL)
     {
         std::runtime_error(std::string("Could not load image!"));

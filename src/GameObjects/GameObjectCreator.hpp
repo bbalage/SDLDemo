@@ -5,21 +5,21 @@
 #include "GameObject.hpp"
 #include "../Parser/parseUtils.hpp"
 
-class GameObjectMaker
+class GameObjectCreator
 {
 public:
-    GameObjectMaker() {}
-    virtual ~GameObjectMaker() {}
-    GameObjectMaker(const GameObjectMaker &) = delete;
-    GameObjectMaker &operator=(const GameObjectMaker &) = delete;
+    GameObjectCreator() {}
+    virtual ~GameObjectCreator() {}
+    GameObjectCreator(const GameObjectCreator &) = delete;
+    GameObjectCreator &operator=(const GameObjectCreator &) = delete;
 
     virtual std::unique_ptr<GameObject> createGameObject(GameObjectDescriptor descriptor) = 0;
 };
 
-class GameObjectMakerSDLGame : GameObjectMaker
+class GameObjectCreatorSDLGame : GameObjectCreator
 {
 public:
-    GameObjectMakerSDLGame() {}
+    GameObjectCreatorSDLGame() {}
 
     std::unique_ptr<GameObject> createGameObject(GameObjectDescriptor descriptor) override;
 };

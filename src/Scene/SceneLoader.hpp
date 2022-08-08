@@ -29,7 +29,7 @@ public:
     virtual ~SceneLoaderSDL() {}
 
 protected:
-    std::vector<Sprite> readRequiredSprites(const SceneDescriptor &sceneDescriptor);
+    std::unordered_set<std::string> readRequiredSpriteNames(const SceneDescriptor &sceneDescriptor);
 };
 
 class SceneLoaderSDLGame : public SceneLoaderSDL
@@ -45,6 +45,11 @@ private:
     SDL_Window *m_pWindow;
     const RendererCreator &m_rendererCreator;
     const Parser &m_parser;
+
+    std::unique_ptr<Player> loadPlayer(const PlayerDescriptor &playerDescriptor, Renderer *renderer);
+    std::vector<std::unique_ptr<GameObject>> loadGameObjects(
+        const std::vector<GameObjectDescriptor> &gameObjectDescriptors,
+        Renderer *renderer);
 };
 
 class SceneLoaderSDLExit : public SceneLoader

@@ -7,13 +7,14 @@
 class GameObject
 {
 public:
-    GameObject(uint spriteId) : m_spriteId(spriteId) {}
+    GameObject(int posX, int posY, uint spriteId) : m_pos(Vec2{posX, posY}), m_spriteId(spriteId) {}
     virtual ~GameObject() {}
 
     virtual void update() = 0;
     virtual RenderInfo renderInfo() const = 0;
 
 protected:
+    Vec2 m_pos;
     uint m_spriteId;
 };
 

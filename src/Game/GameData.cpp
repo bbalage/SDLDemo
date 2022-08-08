@@ -10,7 +10,10 @@ GameData &GameData::instance()
 
 GameData::GameData()
 {
-    std::string fileContent = sdldemo::fileContentToString(SPRITES_DESCRIPTOR_PATH);
+    m_fullPathToProject = findFullPathToProject();
+    m_descriptorsDir = fullPathToProject() / std::string("assets") / std::string("descriptors");
+    m_texturesDir = fullPathToProject() / std::string("assets") / std::string("textures");
+    std::string fileContent = sdldemo::fileContentToString((m_fullPathToProject / SPRITES_DESCRIPTOR_PATH).string());
     size_t lastTag = 0;
     while (true)
     {
@@ -18,11 +21,11 @@ GameData::GameData()
         if (spriteTagI == std::string::npos)
             break;
         std::string name = sdldemo::xmlTagContent(fileContent, m_nameTag, spriteTagI);
-        std::string textureFileName = sdldemo::xmlTagContent(fileContent, m_fileTag, spriteTagI);
+        std::string textureFilePath = sdldemo::xmlTagContent(fileContent, m_fileTag, spriteTagI);
         std::string width = sdldemo::xmlTagContent(fileContent, m_widthTag, spriteTagI);
         std::string height = sdldemo::xmlTagContent(fileContent, m_heightTag, spriteTagI);
         m_spriteDescriptors[name] = SpriteDescriptor{
-            textureFileName,
+            (texturesDir() / textureFilePath).string(),
             std::stoi(width),
             std::stoi(height)};
         lastTag = spriteTagI + m_spriteTag.length();
@@ -32,4 +35,13 @@ GameData::GameData()
 const std::unordered_map<std::string, SpriteDescriptor> &GameData::spriteDescriptors() const
 {
     return m_spriteDescriptors;
+}
+
+std::filesystem::path GameData::findFullPathToProject()
+{
+    std::string binaryFullPath = std::filesystem::current_path().string();
+    std::string projectRootDirName("SDLDemo");
+    size_t index = binaryFullPath.find(projectRootDirName);
+    std::string projectFullPathString = binaryFullPath.substr(0, index + projectRootDirName.length() + 1);
+    return std::filesystem::path(projectFullPathString);
 }

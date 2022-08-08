@@ -6,6 +6,8 @@
 #include <string_view>
 #include "parseUtils.hpp"
 
+#define XML_POSTFIX std::string(".xml")
+
 class Parser
 {
 public:
@@ -33,7 +35,9 @@ private:
     std::string m_spriteTag{"<sprite>"};
     std::string m_posXTag{"<x>"};
     std::string m_posYTag{"<y>"};
-    std::unordered_map<std::string, GameObjectType> m_textToGameObjectTypeMapping{};
+    std::unordered_map<std::string, GameObjectType> m_textToGameObjectTypeMapping{
+        {std::string("background"), GameObjectType::BACKGROUND},
+        {std::string("trap"), GameObjectType::TRAP}};
 
     PlayerDescriptor parsePlayerDescriptor(std::string_view xmlContent) const;
     std::vector<GameObjectDescriptor> parseGameObjectDescriptors(std::string_view xmlContent) const;

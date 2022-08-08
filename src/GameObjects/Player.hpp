@@ -7,16 +7,13 @@
 class Player : public GameObject
 {
 public:
-    Player(uint spriteId) : GameObject(spriteId) {}
+    Player(int posX, int posY, uint spriteId) : GameObject(posX, posY, spriteId) {}
 
     void update() override;
     RenderInfo renderInfo() const override;
 
     // TODO: Remove:
     void move(Vec2 movement) { m_pos += movement; }
-
-private:
-    Vec2 m_pos;
 };
 
 #endif

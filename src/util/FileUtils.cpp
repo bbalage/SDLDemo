@@ -1,20 +1,5 @@
 #include "FileUtils.hpp"
 
-constexpr char sdldemo::separator()
-{
-    return std::filesystem::path::preferred_separator;
-}
-
-std::string sdldemo::descriptorsDir()
-{
-    return std::string("assets") + sdldemo::separator() + std::string("descriptors");
-}
-
-std::string sdldemo::texturesDir()
-{
-    return std::string("assets") + sdldemo::separator() + std::string("textures");
-}
-
 std::string sdldemo::fileContentToString(std::string_view filepath)
 {
     std::string strPath(filepath);
@@ -28,8 +13,11 @@ std::string sdldemo::fileContentToString(std::string_view filepath)
 
 std::string sdldemo::xmlTagContent(std::string_view xmlText, std::string_view tag, size_t searchStart)
 {
-    size_t start = xmlText.find(tag, searchStart) + tag.length();
+    size_t foundIndex = xmlText.find(tag, searchStart);
+    if (foundIndex == std::string::npos)
+        std::invalid_argument("Tag not found: " + std::string(tag));
+    size_t start = foundIndex + tag.length();
     std::string closingTag = std::string("</") + std::string(tag.substr(1));
-    size_t end = xmlText.find(closingTag, start) + tag.length();
+    size_t end = xmlText.find(closingTag, start);
     return std::string(xmlText.substr(start, end - start));
 }

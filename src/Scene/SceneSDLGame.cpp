@@ -1,9 +1,9 @@
 #include "Scene.hpp"
 
 SceneSDLGame::SceneSDLGame(SDL_Window *in_pWindow,
-                           Renderer &in_pRenderer,
+                           std::unique_ptr<Renderer> in_pRenderer,
                            std::unique_ptr<Player> player,
-                           std::vector<std::unique_ptr<GameObject>> gameObjects) : SceneSDL(in_pWindow, in_pRenderer),
+                           std::vector<std::unique_ptr<GameObject>> gameObjects) : SceneSDL(in_pWindow, std::move(in_pRenderer)),
                                                                                    m_pPlayer(player.get()),
                                                                                    m_exit(false)
 {
@@ -38,12 +38,12 @@ void SceneSDLGame::update()
 
 void SceneSDLGame::render()
 {
-    m_Renderer.startRendering();
+    m_Renderer->startRendering();
     for (std::unique_ptr<GameObject> &gameObject : m_gameObjects)
     {
-        m_Renderer.render(gameObject->renderInfo());
+        m_Renderer->render(gameObject->renderInfo());
     }
-    m_Renderer.finishRendering();
+    m_Renderer->finishRendering();
     SDL_Delay(10);
 }
 

@@ -36,19 +36,20 @@ public:
 class SceneSDL : public Scene
 {
 public:
-    SceneSDL(SDL_Window *in_pWindow, Renderer &in_Renderer) : m_pWindow(in_pWindow), m_Renderer(in_Renderer) {}
+    SceneSDL(SDL_Window *in_pWindow, std::unique_ptr<Renderer> in_pRenderer) : m_pWindow(in_pWindow),
+                                                                               m_Renderer(std::move(in_pRenderer)) {}
     virtual ~SceneSDL() = default;
 
 protected:
     SDL_Window *m_pWindow;
-    Renderer &m_Renderer;
+    std::unique_ptr<Renderer> m_Renderer;
 };
 
 class SceneSDLGame : public SceneSDL
 {
 public:
     SceneSDLGame(SDL_Window *in_pWindow,
-                 Renderer &in_Renderer,
+                 std::unique_ptr<Renderer> in_pRenderer,
                  std::unique_ptr<Player> player,
                  std::vector<std::unique_ptr<GameObject>> gameObjects);
 
