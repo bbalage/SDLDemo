@@ -11,6 +11,8 @@
 #define SCREEN_WIDTH 1080
 #define SCREEN_HEIGHT 768
 
+#define DESIRED_FPS 30
+
 class Game
 {
 public:
@@ -30,4 +32,7 @@ private:
     void setScene(SceneSwitchDescriptor sceneDescriptor);
 };
 
+namespace sdldemo {
+constexpr long timeForTurn();
+}
 #endif

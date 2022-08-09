@@ -44,7 +44,6 @@ void SceneSDLGame::render()
         m_Renderer->render(gameObject->renderInfo());
     }
     m_Renderer->finishRendering();
-    SDL_Delay(10);
 }
 
 bool SceneSDLGame::exit()

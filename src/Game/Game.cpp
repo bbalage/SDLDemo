@@ -1,5 +1,6 @@
 #include "Game.hpp"
 #include "../Scene/SceneLoader.hpp"
+#include <chrono>
 
 Game::Game()
 {
@@ -41,8 +42,10 @@ Game::~Game()
 
 void Game::run()
 {
+    Uint32 delay = 1U;
     while (m_pScene)
     {
+        auto startTime = std::chrono::high_resolution_clock::now();
         m_pScene->handleEvents();
         m_pScene->update();
         m_pScene->render();
@@ -50,10 +53,26 @@ void Game::run()
         {
             setScene(m_pScene->nextSceneDescriptor());
         }
+        // Set fix FPS
+        auto timePassed = std::chrono::high_resolution_clock::now() - startTime;
+        auto timeForTurn = sdldemo::timeForTurn();
+        auto nanosecondsPassed = std::chrono::duration_cast<std::chrono::nanoseconds>(timePassed).count();
+        delay = timeForTurn < nanosecondsPassed ? 0 : (timeForTurn - nanosecondsPassed) / 1000000; // TODO: Get rid of conversion warning!
+        SDL_Delay(delay);
+        // Calculate FPS
+        auto totalTimePassed = std::chrono::high_resolution_clock::now() - startTime;
+        auto totalNanosecondsPassed = std::chrono::duration_cast<std::chrono::nanoseconds>(totalTimePassed).count();
+        double fps = 1.0e9 / static_cast<double>(totalNanosecondsPassed);
+        std::cout << "FPS: " << fps << "\n";
     }
 }
 
 void Game::setScene(SceneSwitchDescriptor sceneDescriptor)
 {
     m_pScene = m_sceneLoaders[sceneDescriptor.sceneType]->loadScene(sceneDescriptor.sceneName);
+}
+
+constexpr long sdldemo::timeForTurn()
+{
+    return 1e9 / DESIRED_FPS; // TODO: Get rid of conversion warning!
 }
